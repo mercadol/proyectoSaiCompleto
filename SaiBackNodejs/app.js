@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 // Ejecutar express (http)
 var app = express();
 // cargar ficheros rutas
-//var persona_routes =require('./routes/persona');
+var persona_routes =require('./routes/persona');
 
 // MiddLewares
 app.use(bodyParser.urlencoded({extended:false}));
