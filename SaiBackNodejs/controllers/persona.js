@@ -3,6 +3,7 @@ var validator = require('validator');
 var fs = require('fs');
 var path =require('path');
 var Persona = require('../models/persona');
+
 var controller = {
 
   test:(req, res) => {
@@ -11,14 +12,16 @@ var controller = {
     });
   },
 
+  //trasladar a un buisneslogic
   save: (req, res) => {
     //Recoger parametros por post
-    var params = req.body; // averiguar como se envia este opjeto
+    var params = req.body; // averiguar como se envia este objeto
     console.log(params);
     // Validar datos (Validator)
     try {
-      var validate_title = !validator.isEmpty(params.title);
-      var validate_content = !validator.isEmpty(params.content);
+      var validate_firstName = !validator.isEmpty(params.firstName);
+      var validate_lastName = !validator.isEmpty(params.lastName);
+      var validate_numeroDni= !validator.isEmpty(params.numeroDni);
 
 
     } catch (err) {
@@ -28,12 +31,13 @@ var controller = {
       });
     }
 
-    if (validate_title && validate_content) {
+    if (validate_firstName && validate_lastName && validate_numeroDni) {
       //Crear el objeto a guardar
       var persona = new Persona();
       //Asignar valores
-      persona.title = params.title;
-      persona.content = params.content;
+      persona.firstName = params.firstName;
+      persona.lastName = params.lastName;
+      persona.numeroDni= params.numeroDni;
       if(params.image){
         persona.image=params.image;
       }else{
@@ -65,6 +69,7 @@ var controller = {
 
   },
 
+  //trasladar a un buisneslogic
   getPersonas: (req, res) => {
 
     var querty = Persona.find({});
@@ -97,6 +102,7 @@ var controller = {
 
   },
 
+  //trasladar a un buisneslogic
   getPersona: (req, res) => {
     //Recoger el id de la url
     var personaId = req.params.id;
@@ -137,8 +143,8 @@ var controller = {
 
     //validar datos
     try {
-      var validate_title = !validator.isEmpty(params.title);
-      var validate_content = !validator.isEmpty(params.content);
+      var validate_firstName = !validator.isEmpty(params.firstName);
+      var validate_lastName = !validator.isEmpty(params.lastName);
 
     } catch (err) {
       return res.status(404).send({
@@ -147,7 +153,8 @@ var controller = {
       });
     }
 
-    if(validate_title && validate_content){
+    //trasladar a un buisneslogic
+    if(validate_firstName && validate_lastName){
       //Find update
       Persona.findOneAndUpdate({_id: personaId}, params, {new:true}, (err, personaUdated) => {
         if (err){
@@ -183,7 +190,7 @@ var controller = {
     // Recoger el id de la url
     var personaId = req.params.id;
     // Find and delete
-
+    //trasladar a un buisneslogic:
     Persona.findOneAndDelete({_id: personaId}, (err, personaRemoved) =>{
       if(err){
         return res.status(500).send({
@@ -206,6 +213,7 @@ var controller = {
 
   },//borrar
 
+  //trasladar a un buisneslogic
   upload: (req, res) =>{
     // configurar el modulo connect multiparty router/persona.js(ya esta hecho)
     // Recoger el fichero de la peticion()
@@ -289,8 +297,8 @@ var controller = {
     var searchString = req.params.search;
     //find
     Persona.find({ "$or":[
-      {"title": {"$regex": searchString, "$options": "i"}},
-      {"content": {"$regex": searchString, "$options": "i"}}
+      {"firstName": {"$regex": searchString, "$options": "i"}},
+      {"lastName": {"$regex": searchString, "$options": "i"}}
     ]})
     .sort([['date', 'descending']])
     .exec((err, personas) =>{

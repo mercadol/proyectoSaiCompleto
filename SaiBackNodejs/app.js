@@ -20,7 +20,8 @@ app.use((req, res, next) => {
     next();
 });
 //Añadir prefijos o rutas
-//app.use('/api',persona_routes);
+
+app.use('/api',persona_routes);
 
 // exportar modulo
 module.exports =app;

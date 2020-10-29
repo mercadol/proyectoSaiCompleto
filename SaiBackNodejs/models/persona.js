@@ -4,8 +4,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var PersonaSchema = Schema({
-  title:String,
-  content:String,
+  firstName:String,
+  lastName:String,
+  numeroDni:String,
   date: {type:Date, default: Date.now},
   image:String
 });
