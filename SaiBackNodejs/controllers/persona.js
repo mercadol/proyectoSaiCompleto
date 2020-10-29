@@ -12,7 +12,6 @@ var controller = {
     });
   },
 
-  //trasladar a un buisneslogic
   save: (req, res) => {
     //Recoger parametros por post
     var params = req.body; // averiguar como se envia este objeto
@@ -69,7 +68,6 @@ var controller = {
 
   },
 
-  //trasladar a un buisneslogic
   getPersonas: (req, res) => {
 
     var querty = Persona.find({});
@@ -102,7 +100,6 @@ var controller = {
 
   },
 
-  //trasladar a un buisneslogic
   getPersona: (req, res) => {
     //Recoger el id de la url
     var personaId = req.params.id;
@@ -153,7 +150,6 @@ var controller = {
       });
     }
 
-    //trasladar a un buisneslogic
     if(validate_firstName && validate_lastName){
       //Find update
       Persona.findOneAndUpdate({_id: personaId}, params, {new:true}, (err, personaUdated) => {
@@ -190,7 +186,7 @@ var controller = {
     // Recoger el id de la url
     var personaId = req.params.id;
     // Find and delete
-    //trasladar a un buisneslogic:
+    
     Persona.findOneAndDelete({_id: personaId}, (err, personaRemoved) =>{
       if(err){
         return res.status(500).send({
